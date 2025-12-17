@@ -1,0 +1,263 @@
+[gd_scene load_steps=20 format=3 uid="uid://ymp1d4phcyr4"]
+
+[ext_resource type="Texture2D" uid="uid://chs1r7moml52n" path="res://textures/map_textures/dirt.png" id="1_jyhfs"]
+[ext_resource type="Script" uid="uid://b22kffkfgcd7q" path="res://scripts/Main.gd" id="1_tbgi4"]
+[ext_resource type="Texture2D" uid="uid://t4wg6fq8iwk" path="res://textures/map_textures/grass.png" id="2_tbgi4"]
+[ext_resource type="Texture2D" uid="uid://b3qbchr6765fj" path="res://textures/map_textures/water.png" id="3_tefeu"]
+[ext_resource type="Script" uid="uid://dwwug8powqbcg" path="res://scripts/managers/MapManager.gd" id="4_o6xl0"]
+[ext_resource type="Script" uid="uid://kgxkqc2b6xcq" path="res://scripts/managers/SaveManager.gd" id="5_save"]
+[ext_resource type="PackedScene" uid="uid://c3e2cq1xyelei" path="res://scenes/Tree.tscn" id="6_tree"]
+[ext_resource type="PackedScene" uid="uid://bdh77pe5um5cd" path="res://scenes/Rock.tscn" id="7_rock"]
+[ext_resource type="PackedScene" uid="uid://dmd4p5kr3welq" path="res://scenes/BerryBush.tscn" id="8_berry"]
+[ext_resource type="Script" uid="uid://ccqpeuj3yyjgd" path="res://scripts/CameraController.gd" id="9_cam"]
+[ext_resource type="Script" uid="uid://b62benoeu4416" path="res://scripts/managers/SelectionManager.gd" id="10_sel"]
+[ext_resource type="Script" uid="uid://cimo0sl7yw72w" path="res://scripts/UI.gd" id="11_ui"]
+[ext_resource type="Script" uid="uid://cb2xplcnffivn" path="res://scripts/managers/ZoneManager.gd" id="12_zone"]
+[ext_resource type="Script" uid="uid://cwm6ca5fmgkm6" path="res://scripts/managers/BuildingManager.gd" id="13_build"]
+[ext_resource type="Script" uid="uid://b4oe8r01gexym" path="res://scripts/controllers/BuildController.gd" id="15_jkv2x"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tipki"]
+texture = ExtResource("1_jyhfs")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_85g3d"]
+texture = ExtResource("2_tbgi4")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_choun"]
+texture = ExtResource("3_tefeu")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_ya4ey"]
+tile_size = Vector2i(64, 64)
+sources/0 = SubResource("TileSetAtlasSource_tipki")
+sources/1 = SubResource("TileSetAtlasSource_85g3d")
+sources/2 = SubResource("TileSetAtlasSource_choun")
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_tbgi4")
+
+[node name="Terrain" type="TileMapLayer" parent="."]
+z_index = -1
+tile_set = SubResource("TileSet_ya4ey")
+
+[node name="Entities" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="MapManager" type="Node2D" parent="."]
+script = ExtResource("4_o6xl0")
+tree_scene = ExtResource("6_tree")
+rock_scene = ExtResource("7_rock")
+berry_scene = ExtResource("8_berry")
+
+[node name="SaveManager" type="Node" parent="."]
+script = ExtResource("5_save")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+script = ExtResource("9_cam")
+
+[node name="ZoneManager" type="Node2D" parent="."]
+script = ExtResource("12_zone")
+
+[node name="BuildingManager" type="Node2D" parent="."]
+script = ExtResource("13_build")
+
+[node name="SelectionManager" type="Node2D" parent="."]
+script = ExtResource("10_sel")
+map_manager = NodePath("../MapManager")
+camera = NodePath("../Camera2D")
+
+[node name="UI" type="CanvasLayer" parent="."]
+script = ExtResource("11_ui")
+
+[node name="ResourcePanel" type="Panel" parent="UI"]
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 200.0
+offset_bottom = 150.0
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/ResourcePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/ResourcePanel/MarginContainer"]
+layout_mode = 2
+
+[node name="ResourceLabel" type="Label" parent="UI/ResourcePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Resources:
+Wood: 0
+Stone: 0
+Food: 0"
+
+[node name="ArchitectPanel" type="Panel" parent="UI"]
+visible = false
+offset_left = 10.0
+offset_top = 160.0
+offset_right = 200.0
+offset_bottom = 400.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/ArchitectPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="UI/ArchitectPanel/VBoxContainer"]
+layout_mode = 2
+text = "Architect"
+horizontal_alignment = 1
+
+[node name="BtnWall" type="Button" parent="UI/ArchitectPanel/VBoxContainer"]
+layout_mode = 2
+text = "Wall (5 Wood)"
+
+[node name="BtnDoor" type="Button" parent="UI/ArchitectPanel/VBoxContainer"]
+layout_mode = 2
+text = "Door"
+
+[node name="BtnFloor" type="Button" parent="UI/ArchitectPanel/VBoxContainer"]
+layout_mode = 2
+text = "Floor (2 Wood)"
+
+[node name="BtnFurniture" type="Button" parent="UI/ArchitectPanel/VBoxContainer"]
+layout_mode = 2
+text = "Table (10 Wood)"
+
+[node name="BtnRelax" type="Button" parent="UI/ArchitectPanel/VBoxContainer"]
+layout_mode = 2
+text = "Relax Spot (15 Wood)"
+
+[node name="BtnTemplate" type="Button" parent="UI/ArchitectPanel/VBoxContainer"]
+layout_mode = 2
+text = "Template: Small Room"
+
+[node name="BtnDeconstruct" type="Button" parent="UI/ArchitectPanel/VBoxContainer"]
+layout_mode = 2
+text = "Deconstruct / Cancel"
+
+[node name="OrdersPanel" type="Panel" parent="UI"]
+visible = false
+offset_left = 220.0
+offset_top = 160.0
+offset_right = 410.0
+offset_bottom = 400.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/OrdersPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="UI/OrdersPanel/VBoxContainer"]
+layout_mode = 2
+text = "Orders"
+horizontal_alignment = 1
+
+[node name="BtnChop" type="Button" parent="UI/OrdersPanel/VBoxContainer"]
+layout_mode = 2
+text = "Chop Wood"
+
+[node name="BtnMine" type="Button" parent="UI/OrdersPanel/VBoxContainer"]
+layout_mode = 2
+text = "Mine Rock"
+
+[node name="BtnHarvest" type="Button" parent="UI/OrdersPanel/VBoxContainer"]
+layout_mode = 2
+text = "Harvest"
+
+[node name="BtnDestroy" type="Button" parent="UI/OrdersPanel/VBoxContainer"]
+layout_mode = 2
+text = "Destroy"
+
+[node name="Panel" type="Panel" parent="UI"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -400.0
+offset_top = -60.0
+offset_right = 400.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Panel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="BtnOrders" type="Button" parent="UI/Panel/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "Orders"
+
+[node name="OptionZone" type="OptionButton" parent="UI/Panel/MarginContainer/HBoxContainer"]
+layout_mode = 2
+selected = 0
+item_count = 3
+popup/item_0/text = "Zones..."
+popup/item_0/id = 0
+popup/item_1/text = "Storage"
+popup/item_1/id = 1
+popup/item_2/text = "Home"
+popup/item_2/id = 2
+
+[node name="BtnArchitect" type="Button" parent="UI/Panel/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "Architect"
+
+[node name="BtnCancel" type="Button" parent="UI/Panel/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "Cancel"
+
+[node name="LabelMode" type="Label" parent="UI/Panel/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "Current Tool: NONE"
+
+[node name="BuildController" type="Node2D" parent="." node_paths=PackedStringArray("map_manager", "building_manager", "tile_map_layer")]
+script = ExtResource("15_jkv2x")
+map_manager = NodePath("../MapManager")
+building_manager = NodePath("../BuildingManager")
+tile_map_layer = NodePath("../Terrain")
+metadata/_custom_type_script = "uid://b4oe8r01gexym"
+
+[connection signal="pressed" from="UI/ArchitectPanel/VBoxContainer/BtnWall" to="UI" method="_on_btn_wall_pressed"]
+[connection signal="pressed" from="UI/ArchitectPanel/VBoxContainer/BtnDoor" to="UI" method="_on_btn_door_pressed"]
+[connection signal="pressed" from="UI/ArchitectPanel/VBoxContainer/BtnFloor" to="UI" method="_on_btn_floor_pressed"]
+[connection signal="pressed" from="UI/ArchitectPanel/VBoxContainer/BtnFurniture" to="UI" method="_on_btn_furniture_pressed"]
+[connection signal="pressed" from="UI/ArchitectPanel/VBoxContainer/BtnRelax" to="UI" method="_on_btn_relax_pressed"]
+[connection signal="pressed" from="UI/ArchitectPanel/VBoxContainer/BtnTemplate" to="UI" method="_on_btn_template_pressed"]
+[connection signal="pressed" from="UI/ArchitectPanel/VBoxContainer/BtnDeconstruct" to="UI" method="_on_btn_deconstruct_pressed"]
+[connection signal="pressed" from="UI/Panel/MarginContainer/HBoxContainer/BtnOrders" to="UI" method="_on_btn_orders_pressed"]
+[connection signal="pressed" from="UI/OrdersPanel/VBoxContainer/BtnChop" to="UI" method="_on_btn_chop_pressed"]
+[connection signal="pressed" from="UI/OrdersPanel/VBoxContainer/BtnMine" to="UI" method="_on_btn_mine_pressed"]
+[connection signal="pressed" from="UI/OrdersPanel/VBoxContainer/BtnHarvest" to="UI" method="_on_btn_harvest_pressed"]
+[connection signal="pressed" from="UI/OrdersPanel/VBoxContainer/BtnDestroy" to="UI" method="_on_btn_destroy_pressed"]
+[connection signal="item_selected" from="UI/Panel/MarginContainer/HBoxContainer/OptionZone" to="UI" method="_on_option_zone_item_selected"]
+[connection signal="pressed" from="UI/Panel/MarginContainer/HBoxContainer/BtnArchitect" to="UI" method="_on_btn_architect_pressed"]
+[connection signal="pressed" from="UI/Panel/MarginContainer/HBoxContainer/BtnCancel" to="UI" method="_on_btn_cancel_pressed"]

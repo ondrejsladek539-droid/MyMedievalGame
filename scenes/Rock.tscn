@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://bdh77pe5um5cd"]
+
+[ext_resource type="Script" uid="uid://cg378h3unpcls" path="res://scripts/objects/Rock.gd" id="1_wmx41"]
+[ext_resource type="Texture2D" uid="uid://c5tocsfu5tib4" path="res://textures/objects/stone.png" id="2_wmx41"]
+
+[node name="Rock" type="Node2D"]
+script = ExtResource("1_wmx41")
+object_name = "Rock"
+loot_type = "Stone"
+loot_amount = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.6627451, 0.6627451, 0.6627451, 1)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_wmx41")

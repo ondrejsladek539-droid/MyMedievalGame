@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://c3e2cq1xyelei"]
+
+[ext_resource type="Script" uid="uid://dg8djk2nx7jet" path="res://scripts/objects/Tree.gd" id="1_omb14"]
+[ext_resource type="Texture2D" uid="uid://dt7sxyrk71tnh" path="res://textures/objects/oak.png" id="2_omb14"]
+
+[node name="Tree" type="Node2D"]
+script = ExtResource("1_omb14")
+object_name = "Tree"
+total_work_needed = 3.0
+loot_amount = 10
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.235294, 0.470588, 0.235294, 1)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_omb14")

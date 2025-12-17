@@ -1,0 +1,18 @@
+{
+	"Table": {
+		"name": "Table",
+		"type": "furniture",
+		"scene_path": "res://scenes/structures/Table.tscn",
+		"cost": {"Wood": 10},
+		"description": "A place to eat or work.",
+		"walkable": false
+	},
+	"Bed": {
+		"name": "Relax Spot",
+		"type": "furniture",
+		"scene_path": "res://scenes/structures/Bed.tscn",
+		"cost": {"Wood": 15},
+		"description": "A spot for sleeping.",
+		"walkable": true
+	}
+}

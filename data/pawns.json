@@ -1,0 +1,11 @@
+{
+	"Colonist": {
+		"name": "Colonist",
+		"type": "Human",
+		"default_stats": {
+			"move_speed": 100,
+			"work_speed": 1.0
+		},
+		"equipment": []
+	}
+}

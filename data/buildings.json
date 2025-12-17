@@ -1,0 +1,36 @@
+{
+	"Wall": {
+		"name": "Wall",
+		"type": "structure",
+		"scene_path": "res://scenes/structures/Wall.tscn",
+		"texture_path": "res://textures/structures/wall.svg",
+		"cost": {"Wood": 5},
+		"description": "A simple wooden wall.",
+		"walkable": false
+	},
+	"Floor": {
+		"name": "Floor",
+		"type": "floor",
+		"scene_path": "res://scenes/structures/Floor.tscn",
+		"texture_path": "res://textures/structures/floor.svg",
+		"cost": {"Wood": 2},
+		"description": "A wooden floor.",
+		"walkable": true
+	},
+	"Door": {
+		"name": "Door",
+		"type": "structure",
+		"scene_path": "res://scenes/structures/Door.tscn",
+		"cost": {"Wood": 4},
+		"description": "Allows movement through walls.",
+		"walkable": true
+	},
+	"Window": {
+		"name": "Window",
+		"type": "structure",
+		"scene_path": "res://scenes/structures/Window.tscn",
+		"cost": {"Wood": 3},
+		"description": "Lets light in.",
+		"walkable": false
+	}
+}

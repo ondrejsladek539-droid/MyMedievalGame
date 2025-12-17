@@ -1,0 +1,20 @@
+{
+	"Wood": {
+		"name": "Wood",
+		"category": "Raw Material",
+		"stack_size": 75,
+		"value": 1.0
+	},
+	"Stone": {
+		"name": "Stone",
+		"category": "Raw Material",
+		"stack_size": 75,
+		"value": 1.5
+	},
+	"Food": {
+		"name": "Food",
+		"category": "Consumable",
+		"stack_size": 75,
+		"value": 2.0
+	}
+}
